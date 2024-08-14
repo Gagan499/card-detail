@@ -4,43 +4,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Card List</title>
     <style>
+        html{
+            background-image: linear-gradient(to top, #fbc2eb 0%, #a6c1ee 100%);
+            background-size: cover;
+            background-repeat: no-repeat;
+            min-width: 100%;
+            min-height: 100%;
+        }
         #card-container {
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 25px;
             margin: 80px;
             gap: 40px;
             flex-wrap: wrap;
         }
-
+        
         .card {
-            border: 1px solid pink;
+            border: 1px solid rgb(235, 229, 229);
             border-radius: 7px;
             background: transparent;
-            width: 150px;
-            height: 150px;
-            text-align: center;
+            width: 350px;
+            height: 70px;
+            transition: 1s;
+            cursor: pointer;
+            color: #4a4c50;
+        }
+
+        .card:hover {
+            color: #3c3d3f;
+            transform: translate(2px, -10px);
+        }
+
+        .card-text {
+            color: #57595e;
+            font-size: 15px;
+            display: block;
+            margin-top: -20px;
+            margin-left: 10px;
+        }
+
+        #container-2 {
             display: flex;
+            justify-content: center;
+            align-items: center;
             flex-wrap: wrap;
+            text-align: center;
+            margin-top: 220px;
+        }
+
+        h3 {
+            font-size: 20px;
+            margin-left: 10px;
+            margin-top: 10px;
+            display: block;
+        }
+
+        #details-container {
+            text-align: center;
+            padding: 20px;
+            color: #57595e;
+            border: 1px solid rgb(235, 229, 229);
+            border-radius: 10px;
+            background: transparent;
+        }
+        #back-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: rgb(235, 229, 229);
+            border: 1px solid rgb(235, 229, 229);
+            border-radius: 5px;
+        }
+
+        #back-button:hover {
+            background-color: rgb(126, 116, 116);
         }
     </style>
 </head>
 
 <body>
     <div class="container" id="card-container"></div>
+
     <script>
         function createCard() {
             const container = document.getElementById('card-container');
             for (let i = 1; i <= 12; i++) {
                 const card = document.createElement('div');
                 card.classList.add('card');
-                card.innerHTML = `<span class="card-text">card ${i}</span>`;
+                card.innerHTML = `<h3>card ${i}</h3><span class="card-text">click to see the card details ...</span>`;
+                card.addEventListener('click', () => showCardDetails(i));
                 container.appendChild(card);
             }
         }
+
+        function showCardDetails(cardNumber) {
+            document.body.innerHTML = '';
+            const detailsContainer = document.createElement('div');
+            detailsContainer.id = 'container-2';
+            detailsContainer.innerHTML = `
+            <div id="details-container">
+                <h3>Card ${cardNumber}</h3>
+                <p>Here are the details for card...</p>
+                <button id="back-button">Back</button>
+            </div>`;
+            document.body.appendChild(detailsContainer);
+            document.getElementById('back-button').addEventListener('click', () => {
+                document.body.innerHTML = '<div class="container" id="card-container"></div>';
+                createCard();
+            });
+        }
+
         createCard();
     </script>
 </body>
